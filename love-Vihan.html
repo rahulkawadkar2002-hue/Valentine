@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Valentine Story</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#ffd1dc;
+  text-align:center;
+  overflow:hidden;
+}
+.page{
+  display:none;
+  height:100vh;
+  padding-top:90px;
+}
+.active{display:block;}
+
+h1{color:#c9184a;font-size:36px;}
+h2{color:#6a040f;}
+
+button{
+  padding:12px 30px;
+  font-size:20px;
+  background:red;
+  color:white;
+  border:none;
+  border-radius:10px;
+  margin:15px;
+  cursor:pointer;
+}
+
+#yes:disabled{
+  background:gray;
+  cursor:not-allowed;
+}
+
+.emoji{
+  position:fixed;
+  font-size:30px;
+  animation:fly 3s linear;
+}
+@keyframes fly{
+  from{bottom:0;opacity:1;}
+  to{bottom:100%;opacity:0;}
+}
+
+.fire{
+  position:fixed;
+  font-size:35px;
+  animation:boom 1s ease-out;
+}
+@keyframes boom{
+  from{transform:scale(0);}
+  to{transform:scale(2);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song2" loop>
+  <source src="love2.mp3">
+</audio>
+
+<!-- PAGE 0 -->
+<div class="page active">
+  <h1>Love You Vihan ❤️</h1>
+  <button onclick="next()">Continue</button>
+</div>
+
+<!-- VALENTINE WEEK -->
+<div class="page"><h1>🌹 Happy Rose Day 🌹</h1><button onclick="next()">Continue</button></div>
+<div class="page"><h1>💍 Happy Propose Day 💍</h1><button onclick="next()">Continue</button></div>
+<div class="page"><h1>🍫 Happy Chocolate Day 🍫</h1><button onclick="next()">Continue</button></div>
+<div class="page"><h1>🧸 Happy Teddy Day 🧸</h1><h2>💌 Love You Baccha</h2><button onclick="next()">Continue</button></div>
+<div class="page"><h1>🤝 Happy Promise Day 🤝</h1><button onclick="next()">Continue</button></div>
+<div class="page"><h1>🤗 Happy Hug Day 🤗</h1><button onclick="next()">Continue</button></div>
+<div class="page"><h1>💋 Happy Kiss Day 💋</h1><button onclick="next()">Continue</button></div>
+
+<div class="page">
+  <h1>❤️ Happy Valentine Day ❤️</h1>
+  <button onclick="next()">Continue</button>
+</div>
+
+<div class="page">
+  <h2>Vihu ab main thak gaya yrr 😪</h2>
+  <h3>thoda aaram kar leta hu…</h3>
+  <button onclick="next()">Last Question</button>
+</div>
+
+<!-- FINAL PAGE -->
+<div class="page">
+  <h1>Do you love me Vihan? ❤️</h1>
+  <h2 id="msg">Love You Vihan 💋</h2>
+
+  <button id="yes" onclick="yesClick()" disabled>YES</button>
+  <button id="no" onclick="noClick()">NO</button>
+</div>
+
+<script>
+let pages=document.querySelectorAll(".page");
+let pageIndex=0;
+let noCount=0;
+
+function next(){
+  pages[pageIndex].classList.remove("active");
+  pageIndex++;
+  pages[pageIndex].classList.add("active");
+}
+
+// emoji rain
+setInterval(()=>{
+  let e=document.createElement("div");
+  e.className="emoji";
+  let arr=["🌹","🍫","💍","🧸","🤝","🤗","💋","❤️"];
+  e.innerHTML=arr[Math.floor(Math.random()*arr.length)];
+  e.style.left=Math.random()*100+"%";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),3000);
+},350);
+
+// fireworks
+setInterval(()=>{
+  let f=document.createElement("div");
+  f.className="fire";
+  f.innerHTML="🎆💥";
+  f.style.left=Math.random()*100+"%";
+  f.style.top=Math.random()*100+"%";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1000);
+},900);
+
+function noClick(){
+  let no=document.getElementById("no");
+  let yes=document.getElementById("yes");
+
+  noCount++;
+
+  // random far positions
+  let x=Math.random()*80;
+  let y=Math.random()*80;
+  no.style.position="absolute";
+  no.style.left=x+"%";
+  no.style.top=y+"%";
+
+  if(noCount>=4){
+    yes.disabled=false;
+    document.getElementById("msg").innerHTML="Ab YES dabao ❤️";
+  }
+}
+
+function yesClick(){
+  document.getElementById("msg").innerHTML="Thank You Vihan 😘❤️🎆💥";
+  document.getElementById("song2").play();
+}
+</script>
+
+</body>
+</html>
